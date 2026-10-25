@@ -390,13 +390,32 @@ for (let i = 0; i < STAGES.length; i++) {
 const startButton = { rect: new Rect(WIDTH / 2 - 130, 280, 260, 64), label: "시작하기", stage: 0 };
 const pauseButton = { rect: new Rect(WIDTH - 62, 10, 50, 50) };
 const pauseMenu = [
-  { rect: new Rect(WIDTH / 2 - 130, 220, 260, 64), label: "계속하기", act: () => { paused = false; } },
+  { rect: new Rect(WIDTH / 2 - 130, 220, 260, 64), label: "계속하기", act: () => { appFullscreen(); paused = false; } },
   { rect: new Rect(WIDTH / 2 - 130, 300, 260, 64), label: "다시 시작", act: () => { game.reset(); paused = false; } },
   { rect: new Rect(WIDTH / 2 - 130, 380, 260, 64), label: "처음 화면", act: () => { mode = "title"; paused = false; } },
 ];
 const inRect = (r, [x, y]) => x >= r.x && x <= r.right && y >= r.y && y <= r.bottom;
 
+// 홈 화면 아이콘(설치한 앱)으로 열었을 때만 전체화면. 브라우저에서 바로 할 때는 그대로 둠
+const launchedAsApp = params.has("app")
+  || window.matchMedia("(display-mode: fullscreen), (display-mode: standalone)").matches
+  || navigator.standalone === true;
+
+function appFullscreen() {
+  if (!launchedAsApp) return;
+  const el = document.documentElement;
+  const req = el.requestFullscreen || el.webkitRequestFullscreen;
+  if (!req || document.fullscreenElement || document.webkitFullscreenElement) return;
+  try {
+    const p = req.call(el, { navigationUI: "hide" });
+    if (p && p.catch) p.catch(() => {});
+  } catch (err) { /* 안 되면 그냥 진행 */ }
+}
+
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+
 function startGame(stage) {
+  appFullscreen();
   game = new Game(stage);
   mode = "game";
   paused = false;
