@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>슬라임 점프</title>
+  <!-- 아이폰 "홈 화면에 추가" 하면 앱처럼 전체 화면으로 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="슬라임 점프">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="icon" href="icon.png">
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+    body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+    canvas { display: block; touch-action: none; }
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <script src="engine.js"></script>
+  <script src="settings.js"></script>
+  <script src="stages.js"></script>
+  <script src="level.js"></script>
+  <script src="player.js"></script>
+  <script src="enemy.js"></script>
+  <script src="boss.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
